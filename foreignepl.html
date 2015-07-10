@@ -166,6 +166,9 @@ var line = d3.svg.line()
 var div = d3.select("body").append("div")   
     .attr("class", "tooltip")               
     .style("opacity", 0);
+ttName = div.append('div')
+ttTeam = div.append('div').style('font-size', '60%')
+
 
 c.svg.dataAppend(players, 'path.player')
     .attr('d', ƒ('years', line))
@@ -175,16 +178,22 @@ c.svg.dataAppend(players, 'path.player')
            div.transition()        
                 .duration(200)      
                 .style("opacity", .9);      
-            div.html(d.name + "<br/>")  
-                .style("left", 225 + "px")     
+            div .style("left", 225 + "px")     
                 .style("top", 75 + "px");    
+
+            ttName.html(d.name)
+            ttTeam.html(d.clubs)
+
+            d3.selectAll('circle').style('stroke', function(e){
+              return d == e ? 'darkblue' : 'firebrick' })
               })                  
         .on("mouseout", function(d) {       
                  d3.select(this)
                      .style("stroke", 'firebrick')
                   div.transition()        
                       .duration(500)      
-                      .style("opacity", 0);   
+                      .style("opacity", 0);
+                  d3.selectAll('circle').style('stroke', 'firebrick')
         });
 
 
@@ -262,12 +271,13 @@ c1.svg.dataAppend(players1, 'path.player')
     .on("mouseover", function(d) {      
                 d3.select(this)
                 .style("stroke", 'darkblue')
-           div.transition()        
+
+            div.transition()        
                 .duration(200)      
                 .style("opacity", .9);      
-            div.html(d.name + "<br/>")  
+            div.text(d.name)  
                 .style("left", 225 + "px")     
-                .style("top", 450 + "px");    
+                .style("top", 450 + "px"); 
               })                  
         .on("mouseout", function(d) {       
                  d3.select(this)
@@ -356,7 +366,7 @@ c2.svg.dataAppend(players2, 'path.player')
            div.transition()        
                 .duration(200)      
                 .style("opacity", .9);      
-            div.html(d.name + "<br/>")  
+            div.text(d.name)  
                 .style("left", 225 + "px")     
                 .style("top", 850 + "px");    
               })                  
